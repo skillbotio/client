@@ -1,0 +1,24 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "allowUnreachableCode": false,
+    "allowJs": false,
+    "declaration": true,
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noImplicitReturns": true,
+    "outDir": "lib",
+    "preserveConstEnums": true,
+    "removeComments": true,
+    "sourceMap": true,
+    "strictNullChecks" :true,
+    "target": "ES6"
+  },
+  "include": [
+    "bin/**/*",
+    "src/**/*",
+    "test/**/*"
+  ],
+  "exclude": ["node_modules", "node_modules/@types/request-promise-native/node_modules/@types/request/index.d.ts"]
+}

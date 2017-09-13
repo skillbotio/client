@@ -1,0 +1,42 @@
+{
+  "name": "skill-bot-client",
+  "version": "0.0.1",
+  "description": "SkillBotClient",
+  "main": "lib/src/Index.js",
+  "files": [
+    "lib/src/Index.d.ts",
+    "lib/src/Index.js",
+    "lib/src/SkillConfigurationClient.js",
+    "lib/src/SkillConfigurationClient.d.ts"
+  ],
+  "nyc": {
+    "exclude": [
+      "lib/test/*.js",
+      "test/**/*.js"
+    ]
+  },
+  "scripts": {
+    "pretest": "npm run tsc",
+    "posttest": "nyc report --reporter=json --reporter=html && codecov -f coverage/*.json",
+    "test": "nyc mocha lib/**/*Test.js",
+    "tsc": "tsc"
+  },
+  "author": "John Kelvie",
+  "license": "ISC",
+  "dependencies": {
+    "@types/request-promise-native": "^1.0.6",
+    "request-promise-native": "^1.0.4"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.0.1",
+    "@types/mocha": "^2.2.41",
+    "@types/node": "^8.0.28",
+    "chai": "^4.1.0",
+    "codecov": "^2.3.0",
+    "mocha": "^3.4.2",
+    "nyc": "^11.0.3",
+    "ts-node": "^3.3.0",
+    "tslint": "^5.5.0",
+    "typescript": "^2.4.2"
+  }
+}

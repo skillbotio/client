@@ -1,0 +1,15 @@
+**/*.js
+**/*.js.map
+
+lib/
+
+node_modules/
+
+.idea/
+
+*.log
+.env
+.nyc_output
+coverage/
+
+ssl.*
