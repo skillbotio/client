@@ -1,10 +1,12 @@
 {
   "name": "skill-bot-client",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "SkillBotClient",
   "main": "lib/src/Index.js",
   "typings": "lib/src/Index.d.ts",
-  "bin" : { "skillbot" : "lib/bin/ConfigureSkill.js" },
+  "bin": {
+    "skillbot": "lib/bin/ConfigureSkill.js"
+  },
   "files": [
     "lib/src/Index.d.ts",
     "lib/src/Index.js",
