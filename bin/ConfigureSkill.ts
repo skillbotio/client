@@ -3,7 +3,7 @@ import {ISkillUploadInfo, SkillConfigurationClient} from "../src/SkillConfigurat
 
 const configurationFile = process.argv[2];
 console.log("Configuration: " + process.argv[2]);
-let url = "http://skillbot.bespoken.io";
+let url = "https://skillbot.bespoken.io";
 if (process.argv.length > 3) {
     url = process.argv[3];
 }
