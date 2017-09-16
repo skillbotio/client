@@ -1,18 +1,20 @@
+import * as fs from "fs";
 import {ISkillUploadInfo, SkillConfigurationClient} from "../src/SkillConfigurationClient";
 
-const client = new SkillConfigurationClient("http://localhost:3001");
+const configurationFile = process.argv[2];
+console.log("Configuration: " + process.argv[2]);
+let url = "http://skillbot.bespoken.io";
+if (process.argv.length > 3) {
+    url = process.argv[3];
+}
 
-const info: ISkillUploadInfo = {
-    id: "Giftionary",
-    intentSchemaFile: "/Users/jpk/atom/PictoGiphy/speechAssets/IntentSchema.json",
-    invocationName: "Giftionary",
-    name: "Giftionary",
-    sampleUtterancesFile: "/Users/jpk/atom/PictoGiphy/speechAssets/SampleUtterances.txt",
-    secretKey: "aaaa34ce-3d55-40de-bfcd-2c7f9834f4c7",
-    sourceID: "determined-rice",
-    url: "https://modest-lewis.bespoken.link",
-};
-client.uploadSkill(info).then(() => {
+console.log("URL: " + url);
+const client = new SkillConfigurationClient(url);
+
+const configurationContents = fs.readFileSync(configurationFile).toString();
+const configurationJSON = JSON.parse(configurationContents);
+
+client.uploadSkill(configurationJSON as ISkillUploadInfo).then(() => {
     console.log("Done!");
 }).catch((e) => {
     console.error(e);

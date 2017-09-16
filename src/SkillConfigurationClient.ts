@@ -1,16 +1,30 @@
 import * as fs from "fs";
+import * as path from "path";
 import * as request from "request-promise-native";
 
 export class SkillConfigurationClient {
+    private static cleanFilePath(filePathString: string) {
+        let filePath = filePathString;
+        if (!path.isAbsolute(filePath)) {
+            filePath = path.join(process.cwd(), filePathString);
+        }
+        return filePath;
+    }
+
+    private static readFile(filePath: string): string {
+        filePath = SkillConfigurationClient.cleanFilePath(filePath);
+        return fs.readFileSync(filePath, "utf-8");
+    }
+
     public constructor(public skillConfigurationURL: string) {}
 
     public async uploadSkill(skill: ISkillUploadInfo): Promise<void> {
         const url = this.skillConfigurationURL + "/skill";
         if (skill.intentSchemaFile) {
-            const intentSchemaString = fs.readFileSync(skill.intentSchemaFile, "utf-8");
+            const intentSchemaString = SkillConfigurationClient.readFile(skill.intentSchemaFile);
             const intentSchema = JSON.parse(intentSchemaString);
 
-            const sampleUtterancesString = fs.readFileSync(skill.sampleUtterancesFile, "utf-8").toString();
+            const sampleUtterancesString = SkillConfigurationClient.readFile(skill.sampleUtterancesFile);
             const lines = sampleUtterancesString.split("\n");
             const sampleUtterances: {[id: string]: string[]} = {};
 
@@ -33,7 +47,7 @@ export class SkillConfigurationClient {
             skill.intentSchema = intentSchema;
             skill.sampleUtterances = sampleUtterances;
         } else if (skill.interactionModelFile) {
-            const interactionModelString = fs.readFileSync(skill.interactionModelFile, "utf-8");
+            const interactionModelString = SkillConfigurationClient.readFile(skill.interactionModelFile);
             skill.interactionModel = JSON.parse(interactionModelString);
         }
 
