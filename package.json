@@ -12,7 +12,7 @@
     "lib/src/Index.d.ts",
     "lib/src/Index.js",
     "lib/src/SkillBotClient.js",
-    "lib/src/SkillBot.d.ts",
+    "lib/src/SkillBotClient.d.ts",
     "lib/src/SkillConfigurationClient.js",
     "lib/src/SkillConfigurationClient.d.ts"
   ],
