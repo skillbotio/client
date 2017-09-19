@@ -8,6 +8,7 @@
     "skillbot": "lib/bin/ConfigureSkill.js"
   },
   "files": [
+    "lib/bin/ConfigureSkill.js",
     "lib/src/Index.d.ts",
     "lib/src/Index.js",
     "lib/src/SkillBotClient.js",
