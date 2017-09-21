@@ -1,6 +1,8 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as request from "request-promise-native";
+import {ExternalConfiguration} from "./ExternalConfiguration";
+import {ISkillBotConfiguration} from "./ISkillBotConfiguration";
 
 export class SkillConfigurationClient {
     private static cleanFilePath(filePathString: string) {
@@ -18,13 +20,38 @@ export class SkillConfigurationClient {
 
     public constructor(public skillConfigurationURL: string) {}
 
-    public async uploadSkill(skill: ISkillUploadInfo): Promise<void> {
+    public async uploadFile(configurationFile: string): Promise<void> {
+        const configurationContents = fs.readFileSync(configurationFile).toString();
+        const configurationJSON = JSON.parse(configurationContents);
+        await this.uploadJSON(configurationJSON);
+        // Write the file back out
+        fs.writeFileSync(configurationFile, JSON.stringify(configurationJSON, null, 2));
+    }
+
+    public async uploadJSON(configuration: ISkillBotConfiguration): Promise<void> {
         const url = this.skillConfigurationURL + "/skill";
-        if (skill.intentSchemaFile) {
-            const intentSchemaString = SkillConfigurationClient.readFile(skill.intentSchemaFile);
+        if (!configuration.bespoken) {
+            const configurator = new ExternalConfiguration();
+            await configurator.configure(configuration);
+        }
+        const bespokenInfo = configuration.bespoken as any;
+
+        // We flatten out the data to send it to the skill server
+        const skillURL = "https://" + bespokenInfo.sourceID + ".bespoken.link";
+        const uploadInfo: any = {
+            id: configuration.skill.id,
+            invocationName: configuration.skill.invocationName,
+            name: configuration.skill.name,
+            secretKey: bespokenInfo.secretKey,
+            sourceID: bespokenInfo.sourceID,
+            url: skillURL,
+        };
+
+        if (configuration.skill.intentSchemaFile) {
+            const intentSchemaString = SkillConfigurationClient.readFile(configuration.skill.intentSchemaFile);
             const intentSchema = JSON.parse(intentSchemaString);
 
-            const sampleUtterancesString = SkillConfigurationClient.readFile(skill.sampleUtterancesFile);
+            const sampleUtterancesString = SkillConfigurationClient.readFile(configuration.skill.sampleUtterancesFile);
             const lines = sampleUtterancesString.split("\n");
             const sampleUtterances: {[id: string]: string[]} = {};
 
@@ -44,17 +71,17 @@ export class SkillConfigurationClient {
                 }
                 utterances.push(utterance);
             }
-            skill.intentSchema = intentSchema;
-            skill.sampleUtterances = sampleUtterances;
-        } else if (skill.interactionModelFile) {
-            const interactionModelString = SkillConfigurationClient.readFile(skill.interactionModelFile);
-            skill.interactionModel = JSON.parse(interactionModelString);
+            uploadInfo.intentSchema = intentSchema;
+            uploadInfo.sampleUtterances = sampleUtterances;
+        } else if (configuration.skill.interactionModelFile) {
+            const interactionModelString = SkillConfigurationClient.readFile(configuration.skill.interactionModelFile);
+            uploadInfo.interactionModel = JSON.parse(interactionModelString);
         }
 
         const postOptions = {
-            body: skill,
+            body: uploadInfo,
             headers: {
-                secretKey: skill.secretKey,
+                secretKey: uploadInfo.secretKey,
             },
             json: true,
             method: "POST",
@@ -76,13 +103,10 @@ export class SkillConfigurationClient {
 export interface ISkillUploadInfo {
     id: string;
     intentSchema?: any;
-    intentSchemaFile?: any;
     interactionModel?: any;
-    interactionModelFile?: any;
     invocationName: string;
     name: string;
     sampleUtterances?: any;
-    sampleUtterancesFile?: any;
     secretKey: string;
     sourceID: string;
     url: string;

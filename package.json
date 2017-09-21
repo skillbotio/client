@@ -32,7 +32,9 @@
   "license": "ISC",
   "dependencies": {
     "@types/request-promise-native": "^1.0.6",
-    "request-promise-native": "^1.0.4"
+    "@types/uuid": "^3.4.2",
+    "request-promise-native": "^1.0.4",
+    "uuid": "^3.1.0"
   },
   "devDependencies": {
     "@types/chai": "^4.0.1",

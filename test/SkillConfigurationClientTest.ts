@@ -1,68 +1,102 @@
 import {assert} from "chai";
-import {ISkillUploadInfo, SkillConfigurationClient} from "../src/SkillConfigurationClient";
+import {ISkillBotConfiguration} from "../src/ISkillBotConfiguration";
+import {SkillConfigurationClient} from "../src/SkillConfigurationClient";
+
+const SKILLBOT_URL = "https://skillbot.bespoken.io";
 
 describe("SkillConfiguration Client Test", function() {
     describe("Uploads a skill", function() {
         this.timeout(20000);
         it("Uploads a skill", async () => {
-            // This test relies on running against the dev firebase instance
-            // It also requires there already be a source "testDoNotDelete"
-            const skill: ISkillUploadInfo = {
-                id: "testIDToSave",
-                intentSchemaFile: "./test/resources/IntentSchema.json",
-                invocationName: "test",
-                name: "test skill",
-                sampleUtterancesFile: "./test/resources/SampleUtterances.txt",
-                secretKey: "testSecretKey",
-                sourceID: "testDoNotDelete",
-                url: "http://skill.com/fake_url",
+            const skill: ISkillBotConfiguration = {
+                bespoken: {
+                    secretKey: "testSecretKey",
+                    sourceID: "testDoNotDelete",
+                },
+                skill: {
+                    id: "testIDToSave",
+                    intentSchemaFile: "./test/resources/IntentSchema.json",
+                    invocationName: "test",
+                    name: "test skill",
+                    sampleUtterancesFile: "./test/resources/SampleUtterances.txt",
+                    url: "http://skill.com/fake_url",
+                },
             };
 
-            const client = new SkillConfigurationClient("http://localhost:3001");
+            const client = new SkillConfigurationClient(SKILLBOT_URL);
             try {
-                await client.uploadSkill(skill);
+                await client.uploadJSON(skill);
             } catch (e) {
-                assert.fail(e);
+                console.log(e);
+                assert.fail(e, e.message);
             }
         });
 
         it("Uploads a skill with relative path", async () => {
             // This test relies on running against the dev firebase instance
             // It also requires there already be a source "testDoNotDelete"
-            const skill: ISkillUploadInfo = {
-                id: "testIDToSave",
-                intentSchemaFile: "test/resources/IntentSchema.json",
-                invocationName: "test",
-                name: "test skill",
-                sampleUtterancesFile: "test/resources/SampleUtterances.txt",
-                secretKey: "testSecretKey",
-                sourceID: "testDoNotDelete",
-                url: "http://skill.com/fake_url",
+            const skill: ISkillBotConfiguration = {
+                bespoken: {
+                    secretKey: "testSecretKey",
+                    sourceID: "testDoNotDelete",
+                },
+                skill: {
+                    id: "testIDToSave",
+                    intentSchemaFile: "test/resources/IntentSchema.json",
+                    invocationName: "test",
+                    name: "test skill",
+                    sampleUtterancesFile: "test/resources/SampleUtterances.txt",
+                    url: "http://skill.com/fake_url",
+                },
             };
 
-            const client = new SkillConfigurationClient("http://localhost:3001");
+            const client = new SkillConfigurationClient(SKILLBOT_URL);
             try {
-                await client.uploadSkill(skill);
+                await client.uploadJSON(skill);
             } catch (e) {
                 assert.fail(e);
             }
         });
 
-        it("Uploads a skill without a dashboard source", async () => {
-            const skill: ISkillUploadInfo = {
-                id: "testIDToSave",
-                intentSchemaFile: "./test/resources/IntentSchema.json",
-                invocationName: "test",
-                name: "test skill",
-                sampleUtterancesFile: "./test/resources/SampleUtterances.txt",
-                secretKey: "testSecretKey",
-                sourceID: "testDoesNotExist",
-                url: "http://skill.com/fake_url",
+        it("Uploads a skill with a dashboard source that does not exist", async () => {
+            const skill: ISkillBotConfiguration = {
+                bespoken: {
+                    secretKey: "testSecretKey",
+                    sourceID: "testDoesNotExist",
+                },
+                skill: {
+                    id: "testDoesNotExist",
+                    intentSchemaFile: "test/resources/IntentSchema.json",
+                    invocationName: "test",
+                    name: "test skill",
+                    sampleUtterancesFile: "test/resources/SampleUtterances.txt",
+                    url: "http://skill.com/fake_url",
+                },
             };
 
-            const client = new SkillConfigurationClient("http://localhost:3001");
+            const client = new SkillConfigurationClient(SKILLBOT_URL);
             try {
-                await client.uploadSkill(skill);
+                await client.uploadJSON(skill);
+            } catch (e) {
+                assert.isTrue(e.message.startsWith("Source does not exist"));
+            }
+        });
+
+        it("Uploads a skill without a dashboard source specified", async () => {
+            const skill: ISkillBotConfiguration = {
+                skill: {
+                    id: "testIdToBeCreated",
+                    intentSchemaFile: "test/resources/IntentSchema.json",
+                    invocationName: "test",
+                    name: "test skill",
+                    sampleUtterancesFile: "test/resources/SampleUtterances.txt",
+                    url: "http://skill.com/fake_url",
+                },
+            };
+
+            const client = new SkillConfigurationClient(SKILLBOT_URL);
+            try {
+                await client.uploadJSON(skill);
             } catch (e) {
                 assert.isTrue(e.message.startsWith("Source does not exist"));
             }
