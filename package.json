@@ -9,6 +9,7 @@
   },
   "files": [
     "lib/bin/ConfigureSkill.js",
+    "lib/src/ExternalConfiguration.js",
     "lib/src/Index.d.ts",
     "lib/src/Index.js",
     "lib/src/SkillBotClient.js",
