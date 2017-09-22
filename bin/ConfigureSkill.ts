@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import {SkillConfigurationClient} from "../src/SkillConfigurationClient";
 
 const configurationFile = process.argv[2];
