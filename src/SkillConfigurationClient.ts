@@ -40,6 +40,7 @@ export class SkillConfigurationClient {
         const skillURL = "https://" + bespokenInfo.sourceID + ".bespoken.link";
         const uploadInfo: any = {
             id: configuration.skill.id,
+            imageURL: configuration.skill.imageURL,
             invocationName: configuration.skill.invocationName,
             name: configuration.skill.name,
             secretKey: bespokenInfo.secretKey,
@@ -102,6 +103,7 @@ export class SkillConfigurationClient {
 
 export interface ISkillUploadInfo {
     id: string;
+    imageURL?: string;
     intentSchema?: any;
     interactionModel?: any;
     invocationName: string;

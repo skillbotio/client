@@ -1,4 +1,5 @@
 import {assert} from "chai";
+import * as uuid from "uuid";
 import {ISkillBotConfiguration} from "../src/ISkillBotConfiguration";
 import {SkillConfigurationClient} from "../src/SkillConfigurationClient";
 
@@ -82,10 +83,11 @@ describe("SkillConfiguration Client Test", function() {
             }
         });
 
-        it("Uploads a skill without a dashboard source specified", async () => {
+        it("Does not have a dashboard source specified", async () => {
+            const id = "testSkillBotSkill" + uuid.v4();
             const skill: ISkillBotConfiguration = {
                 skill: {
-                    id: "testIdToBeCreated",
+                    id,
                     intentSchemaFile: "test/resources/IntentSchema.json",
                     invocationName: "test",
                     name: "test skill",

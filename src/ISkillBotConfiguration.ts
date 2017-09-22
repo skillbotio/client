@@ -12,6 +12,7 @@ export interface ISkillBotConfiguration {
 
     skill: {
         id: string;
+        imageURL?: string;
         intentSchemaFile?: any;
         interactionModelFile?: any;
         invocationName: string;
