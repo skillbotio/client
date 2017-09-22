@@ -30,14 +30,19 @@ export class SkillConfigurationClient {
 
     public async uploadJSON(configuration: ISkillBotConfiguration): Promise<void> {
         const url = this.skillConfigurationURL + "/skill";
+        let skillURL = configuration.skill.url;
+
         if (!configuration.bespoken) {
             const configurator = new ExternalConfiguration();
             await configurator.configure(configuration);
         }
-        const bespokenInfo = configuration.bespoken as any;
 
-        // We flatten out the data to send it to the skill server
-        const skillURL = "https://" + bespokenInfo.sourceID + ".bespoken.link";
+        const bespokenInfo = configuration.bespoken as any;
+        // We use our proxy if this is a lambda
+        if (configuration.skill.lambdaARN) {
+            skillURL = "https://" + bespokenInfo.sourceID + ".bespoken.link";
+        }
+
         const uploadInfo: any = {
             id: configuration.skill.id,
             imageURL: configuration.skill.imageURL,

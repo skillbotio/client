@@ -31,6 +31,7 @@
   "dependencies": {
     "@types/request-promise-native": "^1.0.6",
     "@types/uuid": "^3.4.2",
+    "request": "^2.82.0",
     "request-promise-native": "^1.0.4",
     "uuid": "^3.1.0"
   },

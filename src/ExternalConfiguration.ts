@@ -6,7 +6,10 @@ export class ExternalConfiguration {
     // Configures a skill with the Bespoken Spoke and Source if it does not already exist
     public async configure(skillBotConfiguration: ISkillBotConfiguration) {
         await this.createSource(skillBotConfiguration);
-        await this.createPipe(skillBotConfiguration);
+        // Create a pipe if this is a lambda
+        if (skillBotConfiguration.skill.lambdaARN) {
+            await this.createPipe(skillBotConfiguration);
+        }
     }
 
     private async createSource(skillBotConfiguration: ISkillBotConfiguration): Promise<any> {
