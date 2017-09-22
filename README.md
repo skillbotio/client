@@ -14,20 +14,17 @@ Go to the directory for your skill.
 Create a skillbot.json file, that will look like this:
 ```
 {
-  "aws": { // This section is only needed if you are using a Lambda
+  "aws": { // This section is only needed if you are using a Lambda - for url-based skills, not necessary
     "awsAccessKeyId": "AWS_KEY",
     "awsSecretAccessKey": "AWS_SECRET_KEY"
   },
   "skill": {
     "id": "SkillBotDefault",
-    "interactionModelFile": "speechAssets/InteractionModel.json",
+    "imageURL": "IMAGE_URL", // This is the image that will be shown with your skill
+    "interactionModelFile": "speechAssets/InteractionModel.json", // intentSchemaFile and sampleUtteranceFile can also be used
     "invocationName": "Skillbot Default",
-    "lambdaARN": "arn:aws:lambda:us-east-1:048661040156:function:SkillBotDefault-dev-skill",
+    "lambdaARN": "arn:aws:lambda:us-east-1:048661040156:function:SkillBotDefault-dev-skill", // url can be used instead
     "name": "Skillbot Default Skill"
-  },
-  "bespoken": {
-    "secretKey": "dded76a7-a739-46a0-aed5-9b2f4167933c",
-    "sourceID": "skillbotdefault"
   }
 }
 ```
@@ -41,3 +38,4 @@ skillbot skillbot.json
 ```
 
 If everything works correctly, it should just say done!
+The skillbot will automatically update your file with an ID and secretKey for a dashboard source corresponding to your skill.
