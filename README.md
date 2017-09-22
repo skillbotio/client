@@ -1,0 +1,3 @@
+[![CircleCI](https://circleci.com/gh/skillbotio/client.svg?style=svg&circle-token=99112ca7ffc59b0d4d5604ff7fdda32abe84e214)](https://circleci.com/gh/skillbotio/client)
+[![codecov](https://codecov.io/gh/skillbotio/client/branch/master/graph/badge.svg?token=MXXLxo9NlP)](https://codecov.io/gh/skillbotio/client)
+[![npm](https://img.shields.io/npm/v/skillbot-client.svg)](https://npmjs.com/package/skillbot-client)

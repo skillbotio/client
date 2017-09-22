@@ -1,5 +1,5 @@
 {
-  "name": "skill-bot-client",
+  "name": "skillbot-client",
   "version": "0.2.3",
   "description": "SkillBotClient",
   "main": "lib/src/Index.js",
