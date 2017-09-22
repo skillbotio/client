@@ -8,13 +8,10 @@
     "skillbot": "lib/bin/ConfigureSkill.js"
   },
   "files": [
-    "lib/bin/ConfigureSkill.js",
-    "lib/src/ExternalConfiguration.js",
+    "lib/bin/*.js",
+    "lib/src/*.js",
     "lib/src/Index.d.ts",
-    "lib/src/Index.js",
-    "lib/src/SkillBotClient.js",
     "lib/src/SkillBotClient.d.ts",
-    "lib/src/SkillConfigurationClient.js",
     "lib/src/SkillConfigurationClient.d.ts"
   ],
   "nyc": {
