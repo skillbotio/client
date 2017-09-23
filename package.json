@@ -11,6 +11,7 @@
     "lib/bin/*.js",
     "lib/src/*.js",
     "lib/src/Index.d.ts",
+    "lib/src/ISkillBotConfiguration.d.ts",
     "lib/src/SkillBotClient.d.ts",
     "lib/src/SkillConfigurationClient.d.ts"
   ],

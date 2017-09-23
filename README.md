@@ -39,3 +39,8 @@ skillbot skillbot.json
 
 If everything works correctly, it should just say done!
 The skillbot will automatically update your file with an ID and secretKey for a dashboard source corresponding to your skill.
+
+To do a sanity test, for Lambdas, you can always send a payload to:
+```
+https://<SKILL_ID>.bespoken.link
+```
