@@ -1,6 +1,6 @@
 {
   "name": "skillbot-client",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "SkillBotClient",
   "main": "lib/src/Index.js",
   "typings": "lib/src/Index.d.ts",
