@@ -4,6 +4,8 @@ import * as request from "request-promise-native";
 import {ExternalConfiguration} from "./ExternalConfiguration";
 import {ISkillBotConfiguration} from "./ISkillBotConfiguration";
 
+require("dotenv").config();
+
 export class SkillConfigurationClient {
     private static cleanFilePath(filePathString: string) {
         let filePath = filePathString;
@@ -29,6 +31,25 @@ export class SkillConfigurationClient {
     }
 
     public async uploadJSON(configuration: ISkillBotConfiguration): Promise<void> {
+        // Load AWS keys from environment - we do not override ones in the configuration
+        //  We only set them if they are not there
+        if (!configuration.aws) {
+            configuration.aws = {} as any;
+        }
+
+        const awsConfiguration = configuration.aws as any;
+        if (!awsConfiguration.awsAccessKeyId) {
+            awsConfiguration.awsAccessKeyId  = process.env.AWS_ACCESS_KEY_ID;
+        }
+
+        if (!awsConfiguration.awsSecretAccessKey) {
+            awsConfiguration.awsSecretAccessKey  = process.env.AWS_SECRET_ACCESS_KEY;
+        }
+
+        if (!awsConfiguration.region) {
+            awsConfiguration.region  = process.env.AWS_DEFAULT_REGION;
+        }
+
         const url = this.skillConfigurationURL + "/skill";
         let skillURL = configuration.skill.url;
 
