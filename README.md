@@ -5,6 +5,7 @@
 # Skillbot Overview
 Skillbot allows you to use your skills on Slack and other chat clients.
 
+Key information:
 * [Skill Configuration](docs/SKILL_SETUP.md): Configure a skill with Skillbot
 * [Skill Extension API](docs/SKILL_EXTENSION_API.md): Learn about how Skillbot augments the standard Alexa payload, go
 * [Skillbot Client API](docs/SKILLBOT_CLIENT_API.md): Integrate Skillbot into your own client or project

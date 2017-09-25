@@ -7,11 +7,9 @@ The API is straightforward, with only a single call.
 
 ## Skillbot Message call
 ### Request
-**Endpoint**:
-/message
+**Endpoint**: /message
 
-**Method**:
-GET
+**Method**: GET
 
 **Parameters**:
 * channel: String - \[Optional\] The name of the channel this came from
@@ -25,8 +23,7 @@ where a user might be interacting with skillbot simultaneously across several di
 Within each channel, they will have their own separate session.
 
 ### Response
-**Content Type**
-application/json
+**Content Type**: application/json
 
 **Payload**
 ```
