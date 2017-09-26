@@ -18,7 +18,7 @@ Create a skillbot.json file, that will look like this:
   "skill": {
     "id": "SkillBotDefault",
     "imageURL": "IMAGE_URL", // This is the image that will be shown with your skill
-    "interactionModelFile": "speechAssets/InteractionModel.json", // intentSchemaFile and sampleUtteranceFile can also be used
+    "interactionModelFile": "speechAssets/InteractionModel.json", // intentSchemaFile and sampleUtterancesFile can also be used
     "invocationName": "Skillbot Default",
     "lambdaARN": "arn:aws:lambda:us-east-1:048661040156:function:SkillBotDefault-dev-skill", // url can be used instead
     "name": "Skillbot Default Skill"
