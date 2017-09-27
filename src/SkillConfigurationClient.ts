@@ -88,7 +88,7 @@ export class SkillConfigurationClient {
                 }
 
                 const intent = line.split(" ", 2)[0];
-                const utterance = line.split(" ", 2)[1];
+                const utterance = line.split(" ").slice(1).join();
                 let utterances: string[];
                 if (intent in sampleUtterances) {
                     utterances = sampleUtterances[intent];
