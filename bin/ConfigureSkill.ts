@@ -4,7 +4,7 @@ import {SkillConfigurationClient} from "../src/SkillConfigurationClient";
 
 const configurationFile = process.argv[2];
 console.log("Configuration: " + process.argv[2]);
-let url = "https://skillbot.bespoken.io";
+let url = "https://skillbot.io";
 if (process.argv.length > 3) {
     url = process.argv[3];
 }
