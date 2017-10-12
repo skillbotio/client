@@ -6,8 +6,8 @@
 Skillbot allows you to use your skills on Slack and other chat clients.
 
 Key information:
-* [Skill Configuration](docs/SKILL_SETUP_CLASSIC.md): Configure a skill with Skillbot with "classic" structure (IntentSchema.json and SampleUtterances.txt)
-* [Skill Configuration](docs/SKILL_SETUP_CLASSIC.md): Configure a skill with Skillbot with ASK CLI structure (skill.json and models/en-US.json)
+* [Skill Configuration Classic](docs/SKILL_SETUP_CLASSIC.md): Configure a skill with Skillbot with "classic" structure (IntentSchema.json and SampleUtterances.txt)
+* [Skill Configuration ASK](docs/SKILL_SETUP_ASK.md): Configure a skill with Skillbot with ASK CLI structure (skill.json and models/en-US.json)
 * [Skill Extension API](docs/SKILL_EXTENSION_API.md): Learn about how Skillbot augments the standard Alexa payload, go
 * [Skillbot Client API](docs/SKILLBOT_CLIENT_API.md): Integrate Skillbot into your own client or project
 
