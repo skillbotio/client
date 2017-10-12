@@ -1,12 +1,19 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as request from "request-promise-native";
-import {ExternalConfiguration} from "./ExternalConfiguration";
 import {ISkillBotConfiguration} from "./ISkillBotConfiguration";
 
 require("dotenv").config();
 
 export class SkillConfigurationClient {
+    private static awsInfo(): any {
+        const config = {} as any;
+        config.accessKeyId  = process.env.AWS_ACCESS_KEY_ID;
+        config.secretAccessKey  = process.env.AWS_SECRET_ACCESS_KEY;
+        config.region  = process.env.AWS_DEFAULT_REGION;
+        return config;
+    }
+
     private static cleanFilePath(filePathString: string) {
         let filePath = filePathString;
         if (!path.isAbsolute(filePath)) {
@@ -23,62 +30,63 @@ export class SkillConfigurationClient {
     public constructor(public skillConfigurationURL: string) {}
 
     public async uploadFile(configurationFile: string): Promise<void> {
-        const configurationContents = fs.readFileSync(configurationFile).toString();
-        const configurationJSON = JSON.parse(configurationContents);
-        await this.uploadJSON(configurationJSON);
-        // Write the file back out
-        fs.writeFileSync(configurationFile, JSON.stringify(configurationJSON, null, 2));
+        if (configurationFile === "skill.json") {
+            if (!fs.existsSync(".ask/config")) {
+                throw new Error("Cannot find file .ask/config - this is required to get the skill ID");
+            }
+
+            const askConfig = JSON.parse(fs.readFileSync(".ask/config", "UTF-8"));
+            const skillConfig = JSON.parse(fs.readFileSync("skill.json", "UTF-8"));
+            const modelConfig = JSON.parse(fs.readFileSync("models/en-US.json", "UTF-8"));
+            return this.uploadSkillManagementJSON(skillConfig, modelConfig, askConfig);
+        } else if (configurationFile === "skillbot.json") {
+            const configurationContents = fs.readFileSync(configurationFile).toString();
+            const configurationJSON = JSON.parse(configurationContents);
+            return this.uploadLegacyJSON(configurationJSON);
+            // Write the file back out
+        }
     }
 
-    public async uploadJSON(configuration: ISkillBotConfiguration): Promise<void> {
-        // Load AWS keys from environment - we do not override ones in the configuration
-        //  We only set them if they are not there
-        if (!configuration.aws) {
-            configuration.aws = {} as any;
+    public async uploadSkillManagementJSON(skillJSON: any, modelJSON: any, askConfig: any) {
+        const skillID = askConfig.deploy_settings.default.skill_id;
+        if (!skillID || skillID.trim() === "") {
+            throw new Error("Skill ID is not set in the .ask/config file properly. Please fix.");
         }
+        const publishingInfo = skillJSON.skillManifest.publishingInformation.locales["en-US"];
+        const skillName = publishingInfo.name;
+        const invocationName = modelJSON.interactionModel.languageModel.invocationName;
+        const imageURL = publishingInfo.largeIconUri;
+        const uri = skillJSON.skillManifest.apis.custom.endpoint.uri;
 
-        const awsConfiguration = configuration.aws as any;
-        if (!awsConfiguration.awsAccessKeyId) {
-            awsConfiguration.awsAccessKeyId  = process.env.AWS_ACCESS_KEY_ID;
-        }
+        const awsConfig = SkillConfigurationClient.awsInfo();
 
-        if (!awsConfiguration.awsSecretAccessKey) {
-            awsConfiguration.awsSecretAccessKey  = process.env.AWS_SECRET_ACCESS_KEY;
-        }
-
-        if (!awsConfiguration.region) {
-            awsConfiguration.region  = process.env.AWS_DEFAULT_REGION;
-        }
-
-        const url = this.skillConfigurationURL + "/skill";
-        let skillURL = configuration.skill.url;
-
-        if (!configuration.bespoken) {
-            const configurator = new ExternalConfiguration();
-            await configurator.configure(configuration);
-        }
-
-        const bespokenInfo = configuration.bespoken as any;
-        // We use our proxy if this is a lambda
-        if (configuration.skill.lambdaARN) {
-            skillURL = "https://" + bespokenInfo.sourceID + ".bespoken.link";
-        }
-
-        const uploadInfo: any = {
-            id: configuration.skill.id,
-            imageURL: configuration.skill.imageURL,
-            invocationName: configuration.skill.invocationName,
-            name: configuration.skill.name,
-            secretKey: bespokenInfo.secretKey,
-            sourceID: bespokenInfo.sourceID,
-            url: skillURL,
+        const skillbotConfig: any = {
+            aws: awsConfig,
+            id: skillID,
+            imageURL,
+            interactionModel: modelJSON,
+            invocationName,
+            name: skillName,
         };
 
-        if (configuration.skill.intentSchemaFile) {
-            const intentSchemaString = SkillConfigurationClient.readFile(configuration.skill.intentSchemaFile);
+        if (uri.startsWith("https")) {
+            skillbotConfig.url = uri;
+        } else {
+            skillbotConfig.lambdaARN = uri;
+        }
+
+        return await this.upload(skillbotConfig);
+    }
+
+    public async uploadLegacyJSON(configuration: ISkillBotConfiguration): Promise<void> {
+        // Load AWS keys from environment
+        (configuration as any).aws = SkillConfigurationClient.awsInfo();
+
+        if (configuration.intentSchemaFile) {
+            const intentSchemaString = SkillConfigurationClient.readFile(configuration.intentSchemaFile);
             const intentSchema = JSON.parse(intentSchemaString);
 
-            const sampleUtterancesString = SkillConfigurationClient.readFile(configuration.skill.sampleUtterancesFile);
+            const sampleUtterancesString = SkillConfigurationClient.readFile(configuration.sampleUtterancesFile);
             const lines = sampleUtterancesString.split("\n");
             const sampleUtterances: {[id: string]: string[]} = {};
 
@@ -98,18 +106,21 @@ export class SkillConfigurationClient {
                 }
                 utterances.push(utterance);
             }
-            uploadInfo.intentSchema = intentSchema;
-            uploadInfo.sampleUtterances = sampleUtterances;
-        } else if (configuration.skill.interactionModelFile) {
-            const interactionModelString = SkillConfigurationClient.readFile(configuration.skill.interactionModelFile);
-            uploadInfo.interactionModel = JSON.parse(interactionModelString);
+            configuration.intentSchema = intentSchema;
+            configuration.sampleUtterances = sampleUtterances;
+        } else if (configuration.interactionModelFile) {
+            const interactionModelString = SkillConfigurationClient.readFile(configuration.interactionModelFile);
+            configuration.interactionModel = JSON.parse(interactionModelString);
         }
+
+        return await this.upload(configuration);
+    }
+
+    private async upload(uploadInfo: ISkillBotConfiguration): Promise<any> {
+        const url = this.skillConfigurationURL + "/skill";
 
         const postOptions = {
             body: uploadInfo,
-            headers: {
-                secretKey: uploadInfo.secretKey,
-            },
             json: true,
             method: "POST",
             uri: url,
@@ -125,17 +136,4 @@ export class SkillConfigurationClient {
             }
         }
     }
-}
-
-export interface ISkillUploadInfo {
-    id: string;
-    imageURL?: string;
-    intentSchema?: any;
-    interactionModel?: any;
-    invocationName: string;
-    name: string;
-    sampleUtterances?: any;
-    secretKey: string;
-    sourceID: string;
-    url: string;
 }
