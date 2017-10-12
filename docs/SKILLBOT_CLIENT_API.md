@@ -34,7 +34,10 @@ Within each channel, they will have their own separate session.
         subTitle: string, // [OPTIONAL] The subTitle of the card
         title: string, // [OPTIONAL] The title of the card
     },
-    raw: any, // The raw skill response
+    raw: {
+        request: any, // The raw skill request
+        response: any // The raw skill response
+    },
     sessionEnded: boolean, // Whether the session ended
     skill: {
         name: string, // The name of the skill that responded
