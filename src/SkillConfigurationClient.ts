@@ -42,7 +42,7 @@ export class SkillConfigurationClient {
         } else if (configurationFile === "skillbot.json") {
             const configurationContents = fs.readFileSync(configurationFile).toString();
             const configurationJSON = JSON.parse(configurationContents);
-            return this.uploadLegacyJSON(configurationJSON);
+            return this.uploadClassicJSON(configurationJSON);
             // Write the file back out
         }
     }
@@ -78,7 +78,7 @@ export class SkillConfigurationClient {
         return await this.upload(skillbotConfig);
     }
 
-    public async uploadLegacyJSON(configuration: ISkillBotConfiguration): Promise<void> {
+    public async uploadClassicJSON(configuration: ISkillBotConfiguration): Promise<void> {
         // Load AWS keys from environment
         (configuration as any).aws = SkillConfigurationClient.awsInfo();
 
