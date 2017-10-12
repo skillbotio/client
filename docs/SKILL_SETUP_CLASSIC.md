@@ -1,4 +1,4 @@
-# Setting Up A Skill
+# Setting Up A Skill - Classic-style
 ## Pre-requisites
 These instructions assume a skill setup in the "classic" style.
 

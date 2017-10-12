@@ -1,4 +1,4 @@
-# Setting Up A Skill
+# Setting Up A Skill - ASK CLI-style
 ## Pre-requisites
 This approach to setting up a skill for skillbot assumes you are using the new ASK CLI-style structure.
 
