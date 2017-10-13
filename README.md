@@ -14,6 +14,7 @@ Key information:
 # Limitations
 Skillbot does not currently support:
 * The AudioPlayer (yet!)
+* Account Linking (yet!)
 * The Read or Write Lists Permission
 
 And location is **available**, but via an auxiliary element in the request payload.
