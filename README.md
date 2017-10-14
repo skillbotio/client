@@ -11,6 +11,24 @@ Key information:
 * [Skill Extension API](docs/SKILL_EXTENSION_API.md): Learn about how Skillbot augments the standard Alexa payload
 * [Skillbot Client API](docs/SKILLBOT_CLIENT_API.md): Integrate Skillbot into your own client or project
 
+# Limitations
+Skillbot does not currently support:
+* The AudioPlayer (yet!)
+* Account Linking (yet!)
+* The Read or Write Lists Permission
+
+And location is **available**, but via an auxiliary element in the request payload.
+```
+{
+    "skillbot": {
+        "countryCode": "US", // Two-letter country-code where the user resides
+        "postalCode": "19801", // Postal code where the user resides
+        "source": "SLACK" // Where this call came from - only current value is SLACK
+    }
+}
+```
+More [details here](https://github.com/skillbotio/client/blob/master/docs/SKILL_EXTENSION_API.md).
+    
 # Contributing
 Skillbot is based on the [Virtual Alexa](https://github.com/bespoken/virtual-alexa).
 
