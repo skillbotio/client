@@ -1,0 +1,51 @@
+{
+  "skillManifest": {
+    "publishingInformation": {
+      "locales": {
+        "en-US": {
+          "summary": "Fun game to guess the search term for an image.",
+          "examplePhrases": [
+            "Alexa, open giftionary",
+            "is it a cat?",
+            "is it a computer?"
+          ],
+          "keywords": [
+            "pictionary",
+            "giphy",
+            "images",
+            "game"
+          ],
+          "name": "Giftionary",
+          "smallIconUri": "https://api.amazonalexa.com/v0/skills/amzn1.ask.skill.2d19cb76-c064-4cf3-8eed-bad3bc9444e5/images/eyJkIjoiT2ozTm1DUW1rZzFSQ2h2REk2NUFJZ052Zk1sMVdvMW9tM1NLcGxyRDlXNlpUTisvN0hrRGhUNWxGUUpJa3hEYmRKNk9FQ0tRamtsY3R5aXpsRzhVb1NiM05PRWxJRUVTYWpxVGhhMWR2N0FSNUhDNURPQ21JMmdDWlBWY0VzL2MiLCJpdiI6Im52YWFOREE1YXU2NXR2NElhakZoUnc9PSIsInYiOjF9",
+          "description": "We show you an image, and you have to guess the search term that generated it. For",
+          "largeIconUri": "https://bespoken.io/wp-content/uploads/Bespoken-Alpaca-RGB.png"
+        }
+      },
+      "isAvailableWorldwide": true,
+      "testingInstructions": "Say \"Open giftionary\"\nIf testing on an EchoShow, guess the image that is shown to you.\nOn other devices, look at the cards that are shown in the Alexa app, and guess the image based on that.",
+      "category": "GAMES",
+      "distributionCountries": []
+    },
+    "apis": {
+      "custom": {
+        "endpoint": {
+          "sslCertificateType": "Wildcard",
+          "uri": "arn:aws:lambda:us-east-1:048661040156:function:Giftionary-dev-skill"
+        },
+        "interfaces": [
+          {
+            "type": "RENDER_TEMPLATE"
+          }
+        ]
+      }
+    },
+    "manifestVersion": "1.0",
+    "privacyAndCompliance": {
+      "allowsPurchases": false,
+      "isExportCompliant": true,
+      "containsAds": false,
+      "isChildDirected": false,
+      "usesPersonalInfo": false
+    }
+  }
+}

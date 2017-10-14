@@ -1,0 +1,8 @@
+{
+  "deploy_settings": {
+    "default": {
+      "skill_id": "testSkillUsingASKStyleConfig",
+      "was_cloned": false
+    }
+  }
+}

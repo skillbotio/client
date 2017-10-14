@@ -1,0 +1,76 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "giftionary",
+      "intents": [
+        {
+          "name": "AMAZON.StopIntent"
+        },
+        {
+          "name": "AMAZON.CancelIntent"
+        },
+        {
+          "name": "AMAZON.NavigateSettingsIntent"
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent"
+        },
+        {
+          "name": "AMAZON.MoreIntent"
+        },
+        {
+          "name": "AMAZON.NoIntent"
+        },
+        {
+          "name": "AMAZON.PageDownIntent"
+        },
+        {
+          "name": "AMAZON.PageUpIntent"
+        },
+        {
+          "name": "AMAZON.ScrollRightIntent"
+        },
+        {
+          "name": "AMAZON.ScrollDownIntent"
+        },
+        {
+          "name": "AMAZON.ScrollLeftIntent"
+        },
+        {
+          "name": "AMAZON.ScrollUpIntent"
+        },
+        {
+          "name": "AMAZON.HelpIntent"
+        },
+        {
+          "name": "AMAZON.NextIntent"
+        },
+        {
+          "name": "AMAZON.PreviousIntent"
+        },
+        {
+          "name": "AMAZON.YesIntent"
+        },
+        {
+          "name": "Play",
+          "samples": [
+            "get started"
+          ]
+        },
+        {
+          "name": "Guess",
+          "samples": [
+            "{Term}",
+            "is it {Term}"
+          ],
+          "slots": [
+            {
+              "name": "Term",
+              "type": "AMAZON.LITERAL"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
