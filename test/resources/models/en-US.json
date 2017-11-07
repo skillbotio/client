@@ -1,7 +1,7 @@
 {
   "interactionModel": {
     "languageModel": {
-      "invocationName": "giftionary",
+      "invocationName": "test ask style",
       "intents": [
         {
           "name": "AMAZON.StopIntent"

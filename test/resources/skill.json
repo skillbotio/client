@@ -15,7 +15,7 @@
             "images",
             "game"
           ],
-          "name": "Giftionary",
+          "name": "Test ASK Style",
           "smallIconUri": "https://api.amazonalexa.com/v0/skills/amzn1.ask.skill.2d19cb76-c064-4cf3-8eed-bad3bc9444e5/images/eyJkIjoiT2ozTm1DUW1rZzFSQ2h2REk2NUFJZ052Zk1sMVdvMW9tM1NLcGxyRDlXNlpUTisvN0hrRGhUNWxGUUpJa3hEYmRKNk9FQ0tRamtsY3R5aXpsRzhVb1NiM05PRWxJRUVTYWpxVGhhMWR2N0FSNUhDNURPQ21JMmdDWlBWY0VzL2MiLCJpdiI6Im52YWFOREE1YXU2NXR2NElhakZoUnc9PSIsInYiOjF9",
           "description": "We show you an image, and you have to guess the search term that generated it. For",
           "largeIconUri": "https://bespoken.io/wp-content/uploads/Bespoken-Alpaca-RGB.png"

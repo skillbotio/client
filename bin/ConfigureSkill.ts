@@ -15,5 +15,5 @@ const client = new SkillConfigurationClient(url);
 client.uploadFile(configurationFile).then(() => {
     console.log("Done!");
 }).catch((e) => {
-    console.error(e);
+    console.error(e.message);
 });

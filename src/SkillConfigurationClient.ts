@@ -111,8 +111,20 @@ export class SkillConfigurationClient {
         } else if (configuration.interactionModelFile) {
             const interactionModelString = SkillConfigurationClient.readFile(configuration.interactionModelFile);
             configuration.interactionModel = JSON.parse(interactionModelString);
+        } else {
+            const error = "Either intentSchemaFile and sampleUtterances file must be specified," +
+                "or interactionModelFile.\n" +
+                "Full configuration reference is here:\n" +
+                "\thttps://github.com/skillbotio/client/blob/master/src/ISkillBotConfiguration.ts";
+            throw new Error(error);
         }
 
+        const aws = (configuration as any).aws;
+        if (configuration.lambdaARN && (!aws.accessKeyId
+                || !aws.secretAccessKey)) {
+            throw new Error("For Lambdas, environment variables for AWS_ACCESS_KEY_ID, "
+                + "AWS_SECRET_ACCESS_KEY must be set.");
+        }
         return await this.upload(configuration);
     }
 
