@@ -1,13 +1,18 @@
 [![CircleCI](https://circleci.com/gh/skillbotio/client.svg?style=svg&circle-token=99112ca7ffc59b0d4d5604ff7fdda32abe84e214)](https://circleci.com/gh/skillbotio/client)
 [![codecov](https://codecov.io/gh/skillbotio/client/branch/master/graph/badge.svg?token=MXXLxo9NlP)](https://codecov.io/gh/skillbotio/client)
 [![npm](https://img.shields.io/npm/v/skillbot-client.svg)](https://npmjs.com/package/skillbot-client)
+# What is this?
+Skillbot allows you to interact with Alexa skills via Slack (and soon other platforms as well). Here is a quick demo:
+![Skillbot Demo](SkillbotDemo.gif)
 
-# Skillbot Overview
-Skillbot allows you to use your skills on Slack and other chat clients.
+To try it out initially, join the Bespoken Bots slack channel. [Get an invite here](https://slofile.com/slack/bespokenbots).
 
-Key information:
-* [Skill Configuration *Classic*](docs/SKILL_SETUP_CLASSIC.md): Configure a skill with Skillbot with "classic" structure (IntentSchema.json and SampleUtterances.txt)
-* [Skill Configuration *ASK*](docs/SKILL_SETUP_ASK.md): Configure a skill with Skillbot with ASK CLI structure (skill.json and models/en-US.json)
+# Setup
+To work, Skillbot needs to get some information about your skill - specifically, how to call it (URL or Lambda) and the interaction model:
+* [Skill Configuration *Classic*](docs/SKILL_SETUP_CLASSIC.md): Configure a skill with Skillbot using the "classic" structure (IntentSchema.json and SampleUtterances.txt)
+* [Skill Configuration *ASK*](docs/SKILL_SETUP_ASK.md): Configure a skill with Skillbot using the ASK CLI structure (skill.json and models/en-US.json)
+
+Additionally, we have APIs for working with Skillbot:  
 * [Skill Extension API](docs/SKILL_EXTENSION_API.md): Learn about how Skillbot augments the standard Alexa payload
 * [Skillbot Client API](docs/SKILLBOT_CLIENT_API.md): Integrate Skillbot into your own client or project
 
@@ -28,7 +33,7 @@ And location is **available**, but via an auxiliary element in the request paylo
 }
 ```
 More [details here](https://github.com/skillbotio/client/blob/master/docs/SKILL_EXTENSION_API.md).
-    
+
 # Contributing
 Skillbot is based on the [Virtual Alexa](https://github.com/bespoken/virtual-alexa).
 
