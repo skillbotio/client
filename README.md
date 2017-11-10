@@ -3,7 +3,7 @@
 [![npm](https://img.shields.io/npm/v/skillbot-client.svg)](https://npmjs.com/package/skillbot-client)
 # What is this?
 Skillbot allows you to interact with Alexa skills via Slack (and soon other platforms as well). Here is a quick demo:
-<img src="https://raw.githubusercontent.com/skillbotio/client/master/docs/SkillbotDemo.gif" width="400" />
+<div style="margin:auto><img src="https://raw.githubusercontent.com/skillbotio/client/master/docs/SkillbotDemo.gif" width="600" /></div>
 
 To try it out initially, join the Bespoken Bots slack channel. [Get an invite here](https://slofile.com/slack/bespokenbots).
 
