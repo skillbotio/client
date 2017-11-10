@@ -4,7 +4,11 @@
 # What is this?
 Skillbot allows you to interact with Alexa skills via Slack (and soon other platforms as well). Here is a quick demo:
 
-<kbd><img style="border: 2px solid black;" src="https://raw.githubusercontent.com/skillbotio/client/master/docs/SkillbotDemo.gif" width="600" /></kbd>
+<p align="center">
+    <kbd>
+        <img style="border: 2px solid black;" src="https://raw.githubusercontent.com/skillbotio/client/master/docs/SkillbotDemo.gif" width="600" />
+    </kbd>
+</p>
 
 To try it out initially, join the Bespoken Bots slack channel. [Get an invite here](https://slofile.com/slack/bespokenbots).
 
