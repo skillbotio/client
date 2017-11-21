@@ -13,8 +13,8 @@ Skillbot allows you to interact with Alexa skills via Slack (and soon other plat
 To try it out initially, join the Bespoken Bots slack channel. [Get an invite here](https://slofile.com/slack/bespokenbots).
 
 # Setup
-To work, Skillbot needs to get some information about your skill - specifically, how to call it (URL or Lambda) and the interaction model:
-* [Skill Configuration *Classic*](docs/SKILL_SETUP_CLASSIC.md): Configure a skill with Skillbot using the "classic" structure (IntentSchema.json and SampleUtterances.txt)
+Setup takes just five minutes. To work, we need to get some information about your skill - specifically, how to call it (URL or Lambda) and the interaction model:
+* [Skill Configuration *Classic*](docs/SKILL_SETUP_CLASSIC.md): Configure a skill with Skillbot using the "classic" structures (IntentSchema.json and SampleUtterances.txt, or InteratactionModel.json) 
 * [Skill Configuration *ASK*](docs/SKILL_SETUP_ASK.md): Configure a skill with Skillbot using the ASK CLI structure (skill.json and models/en-US.json)
 
 Additionally, we have APIs for working with Skillbot:  
